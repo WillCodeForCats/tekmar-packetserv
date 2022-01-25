@@ -237,16 +237,16 @@ if __name__ == '__main__':
         ip4_acl = ipaddress.IPv4Network(os.environ.get('IP4_ACL'))
         
     except IndexError:
-        print ('Usage:  python3 packetserv.py \'SERIAL_NAME\'')
+        print (f"Usage:  python3 packetserv.py 'SERIAL_NAME'")
         
     except ValueError:
-        print('address/netmask is invalid for IPv4:', address)
+        print("address/netmask is invalid for IPv4: {address}")
 
     else:
-        message('Starting Tekmar Packet Server...')
-        message('Process ID = %d' % os.getpid())
+        message(f"Starting Tekmar Packet Server...")
+        message(f"Process ID = {os.getpid()}")
 
-        message('Opening serial port: %s' % ser_name)
+        message(f"Opening serial port: {ser_name}")
         try:
             serial_port = serial.Serial(ser_name, timeout = TIMEOUT)
 
@@ -265,7 +265,7 @@ if __name__ == '__main__':
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 sock.bind((host_addr, port_id))
                 sock.listen(1)
-                #message('IPv4 Access List: %s' % ip4_acl)
+                message("IPv4 Access List: {ip4_acl}")
                 message('Waiting for incoming connections.')
 
             except socket.error:
