@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.1.0
+## 1.0.2
+- Add EN translation.
+
+## 1.0.1
 - Add allowed IP address (CIDR format) setting for security.
 
 ## 1.0.0
