@@ -5,7 +5,6 @@
   "slug": "tekmar_packetserv",
   "description": "Packet Server Add-On for the Tekmar Gateway 482",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "startup": "application",
   "boot": "auto",
   "options": {
     "serial_device": null,
