@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.0
+- Add allowed IP address (CIDR format) setting for security.
+
 ## 1.0.0
 - First stable release.
 

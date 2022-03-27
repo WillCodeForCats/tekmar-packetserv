@@ -230,17 +230,14 @@ class RunSerial(threading.Thread):
 #******************************************************************************
 if __name__ == '__main__':
     try:
-        ser_name = sys.argv[1]
+        ser_name = os.environ.get('SERIAL_DEV')
+        env_ipv4_acl = os.environ.get('IP4_ACL')
         host_addr = '0.0.0.0'
         port_id = 3000
-        
-        ip4_acl = ipaddress.IPv4Network(os.environ.get('IP4_ACL'))
-        
-    except IndexError:
-        print (f"Usage:  python3 packetserv.py 'SERIAL_NAME'")
-        
+        ip4_acl = ipaddress.IPv4Network(env_ipv4_acl)
+
     except ValueError:
-        print("address/netmask is invalid for IPv4: {address}")
+        print(f"address/netmask is invalid: {env_ipv4_acl}")
 
     else:
         message(f"Starting Tekmar Packet Server...")
@@ -254,46 +251,40 @@ if __name__ == '__main__':
             message('Could not open serial port. Exiting.')
 
         else:
-            # Prepare the way for, and start the serial thread.
             connections = ConnectionList()
             serial_thread = RunSerial(serial_port, connections)
             serial_thread.start()
             message('Starting serial thread.')
 
             try:
-                # Get the main server socket up and running.
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 sock.bind((host_addr, port_id))
                 sock.listen(1)
-                message("IPv4 Access List: {ip4_acl}")
+                message(f"IPv4 Access List: {ip4_acl}")
                 message('Waiting for incoming connections.')
 
             except socket.error:
-                # No server socket.  We still need to kill the serial port, though.
                 message('Could not open socket at %s:%d' % (host_addr, port_id))
                 serial_thread.stop()
 
             else:
                 try:
-                    # Listen for connections, accept them, and add them to the list.
-                    # The serial thread will know what to do with them.
                     while True:
                         c, a = sock.accept()
 
-                        if ip4_acl.overlaps(ipaddress.IPv4Address(a[0]))
-                            message('ACL match')
-                        else
-                            message('ACL no match')
+                        if ipaddress.IPv4Address(a[0]) in ip4_acl:
+                            connections.lock.acquire()
+                            connections.lst.append(Connection(c, a))
+                            connections.lock.release()
+                            if not check_thread_alive(serial_thread):
+                                raise ConnectionError('Serial port thread is not running!')
+                            message('Connected to %s:%d' % (a[0], a[1]))
 
-                        connections.lock.acquire()
-                        connections.lst.append(Connection(c, a))
-                        connections.lock.release()
-                        if not check_thread_alive(serial_thread):
-                            raise ConnectionError('Serial port thread is not running!')
-                        message('Connected to %s:%d' % (a[0], a[1]))
+                        else:
+                            c.close()
+                            message(f"Connection refused: {a[0]} not in {env_ipv4_acl}")
 
                 except socket.error as err:
-                    # Shut down if the main server socket dies.
                     message(err)
                     shut_down('Socket error. Forcing shutdown.', serial_thread, connections)
                     

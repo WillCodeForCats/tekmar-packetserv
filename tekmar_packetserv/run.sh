@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bashio
-SERIAL_DEVICE=$(bashio::config 'device')
-IP4_ACL=$(bashio::config 'ip4_acl')
+export SERIAL_DEV=$(bashio::config 'serial_device')
+export IP4_ACL=$(bashio::config 'ip_access_permit')
 
-python3 server/packetserv.py ${SERIAL_DEVICE}
+python3 server/packetserv.py
