@@ -19,6 +19,13 @@ This Add-On requires additional hardware:
 - Tekmar Gateway 482 (tN4 Gateway, RS232)
 - RS232 serial port, such as a USB to Serial adapter.
 
+## Installation
+
+1. Navigate in your Home Assistant frontend to **Supervisor** -> **Add-on Store** and add this URL as an additional repository: `https://github.com/WillCodeForCats/tekmar-packetserv`
+2. Find the "Tekmar Packet Server" add-on and click the "INSTALL" button.
+3. Configure the add-on and click on "START".
+4. Install the "Tekmar 482 Integration" from HACS or https://github.com/WillCodeForCats/tekmar-482
+
 ## Integration
 
 This Add-On is used by the Tekmar 482 Integration. For more information,
