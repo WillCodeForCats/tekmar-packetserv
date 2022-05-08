@@ -5,7 +5,6 @@
   "slug": "tekmar_packetserv",
   "description": "Packet Server Add-On for the Tekmar Gateway 482",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "boot": "auto",
   "image": "ghcr.io/willcodeforcats/{arch}-tekmar-packetserv",
   "options": {
     "serial_device": null,
@@ -20,6 +19,5 @@
   },
   "ports_description": {
     "3000/tcp": "Tekmar Packet Server"
-  },
-  "stage": "stable"
+  }
 }
