@@ -21,10 +21,12 @@ This Add-On requires additional hardware:
 
 ## Installation
 
-1. Navigate in your Home Assistant frontend to **Supervisor** -> **Add-on Store** and add this URL as an additional repository: `https://github.com/WillCodeForCats/tekmar-packetserv`
-2. Find the "Tekmar Packet Server" add-on and click the "INSTALL" button.
-3. Configure the add-on and click on "START".
-4. Install the "Tekmar 482 Integration" from HACS or https://github.com/WillCodeForCats/tekmar-482
+1. Navigate in your Home Assistant settings to **Supervisor** -> **Add-on Store** OR **Add-ons** -> **Add-on Store**
+2. CLick on the menu and go to **Repositories** to bgint up the manage add-on repositories window.
+3. Add this URL as an additional repository: `https://github.com/WillCodeForCats/tekmar-packetserv`
+4. Find the "Tekmar Packet Server" add-on and click the "INSTALL" button.
+5. Configure the add-on and click on "START".
+6. Install the "Tekmar 482 Integration" from HACS or https://github.com/WillCodeForCats/tekmar-482
 
 ## Integration
 
