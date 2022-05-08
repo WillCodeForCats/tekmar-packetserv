@@ -1,0 +1,7 @@
+configuration:
+  serial_device:
+    name: Serial Device
+    description: Path to your serial port or serial adapter.
+  ip_access_permit:
+    name: Allow IP Access
+    description: An IPv4 network in CIDR format to allow access.
