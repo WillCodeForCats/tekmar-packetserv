@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.3
+## 1.1.0
 - Use custom apparmor file.
 
 ## 1.0.2
