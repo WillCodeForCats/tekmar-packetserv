@@ -1,4 +1,4 @@
-# Tekmar Packet Server (tekmar-packetserv)
+# Tekmar Packet Server
 
 Home Assistant Add-On for the Tekmar Gateway 482
 
