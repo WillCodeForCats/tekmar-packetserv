@@ -6,7 +6,6 @@
   "description": "Packet Server Add-On for the Tekmar Gateway 482",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "image": "ghcr.io/willcodeforcats/{arch}-tekmar-packetserv",
-  "apparmor": true,
   "options": {
     "serial_device": null,
     "ip_access_permit": "0.0.0.0/0"
