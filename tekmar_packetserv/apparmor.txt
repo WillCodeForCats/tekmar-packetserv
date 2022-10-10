@@ -2,39 +2,51 @@
 
 profile tekmar_packetserv flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
-  
+
   # Capabilities
   file,
-  signal,
+  signal (send) set=(kill,term,int,hup,cont),
 
   # S6-Overlay
-  /init rix,
+  /init ix,
   /bin/** ix,
   /usr/bin/** ix,
-  /etc/s6/** rix,
-  /run/s6/** rwix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
   /etc/services.d/** rwix,
   /etc/cont-init.d/** rwix,
   /etc/cont-finish.d/** rwix,
-  /run/** rwk,
+  /run/{,**} rwk,
+  /dev/tty rw,
 
   # Bashio
   /usr/lib/bashio/** ix,
-  /tmp/** rw,
+  /tmp/** rwk,
 
   # Access to options.json and other files within your addon
   /data/** rw,
-  
+
   # Start new profile for service
-  /server/packetserv.py cx,
-  
+  /server/packetserv.py cx -> packetserv.py,
+
   profile /server/packetserv.py flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
-    
+
     # Receive signals from S6-Overlay
-    signal receive,
-    
-    # allow network access
-    network tcp,
+    signal (receive) peer=*_tekmar_packetserv,
+
+    # Access to options.json and other files within your addon
+    /data/** rw,
+
+    # Access to mapped volumes specified in config.json
+    /share/** rw,
+
+    # Access required for service functionality
+    /server/packetserv.py r,
+    /bin/bash rix,
+    /bin/echo ix,
+    /etc/passwd r,
+    /dev/tty rw,
   }
 }

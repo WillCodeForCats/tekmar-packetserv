@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.1.0
-- Use custom apparmor file.
+- Add custom apparmor file.
 
 ## 1.0.2
 - Add EN translation.
