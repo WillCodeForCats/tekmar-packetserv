@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+- Add custom apparmor file.
+- S6-Overlay 3.x
+
 ## 1.0.2
 - Add EN translation.
 
