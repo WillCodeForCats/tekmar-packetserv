@@ -232,7 +232,7 @@ if __name__ == "__main__":
         print(f"address/netmask is invalid: {env_ipv4_acl}")
 
     else:
-        message(f"Starting Tekmar Packet Server...")
+        message("Starting Tekmar Packet Server...")
         message(f"Process ID = {os.getpid()}")
 
         message(f"Opening serial port: {ser_name}")
