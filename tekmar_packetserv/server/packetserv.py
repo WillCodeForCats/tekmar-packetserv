@@ -169,9 +169,10 @@ class RunSerial(threading.Thread):
                             self.port.write(struct.pack(fmt, *pck_bytes))
 
                     except socket.error:
-                        # rx_str == '' should indicate that a socket closed.  It seems that
-                        # this method is required for the cygwin platform as the closed socket
-                        # shows up in the readable list, but can't be read from.
+                        # rx_str == '' should indicate that a socket closed.
+                        # It seems that this method is required for the cygwin
+                        # platform as the closed socket shows up in the readable
+                        # list, but can't be read from.
                         removals.append(r)
 
                 for w in wl:
