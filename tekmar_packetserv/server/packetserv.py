@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
-
-""" Packet server application.
-    """
-
+""" Packet server application. """
 
 import datetime
 import ipaddress
-
-# ******************************************************************************
 import os
 import select
 import socket
