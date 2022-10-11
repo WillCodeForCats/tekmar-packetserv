@@ -4,19 +4,20 @@
     """
 
 
+import datetime
+import ipaddress
+
 # ******************************************************************************
 import os
-import datetime
-import serial
-import threading
+import select
 import socket
 import struct
-import tpck
-import select
-import packet
-import ipaddress
+import threading
 import traceback
 
+import packet
+import serial
+import tpck
 
 # ******************************************************************************
 # Timeout used for serial port and socket reads.
