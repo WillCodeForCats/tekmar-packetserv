@@ -193,7 +193,7 @@ class RunSerial(threading.Thread):
             self.running = False
             message(err)
 
-        except:  # noqa: E722
+        except Exception:
             # Expected exception handling is buried in the calls within this
             # thread.  Anything else is to major to handle and is most likely
             # caused by the main server thread being killed.
