@@ -287,5 +287,5 @@ if __name__ == "__main__":
                         "Exception. Forcing shutdown.", serial_thread, connections
                     )
 
-                except:
+                except Exception:
                     message(traceback.format_exc())
