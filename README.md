@@ -20,23 +20,15 @@ This Add-On requires additional hardware:
 - RS232 serial port, such as a USB to Serial adapter.
 
 ## Installation
-1. Use the My Home Assistant link: [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FWillCodeForCats%2Ftekmar-packetserv)
 
-OR
-
-1. Navigate in your Home Assistant settings to **Supervisor** -> **Add-on Store** OR **Add-ons** -> **Add-on Store**
-2. Click on the menu and go to **Repositories** to bgint up the manage add-on repositories window.
-3. Add this URL as an additional repository: `https://github.com/WillCodeForCats/tekmar-packetserv`
-4. Find the "Tekmar Packet Server" add-on and click the "INSTALL" button.
-5. Configure the add-on and click on "START".
-6. Install the "Tekmar 482 Integration" from HACS or https://github.com/WillCodeForCats/tekmar-482
+[WillCodeForCats/tekmar-packetserv/wiki/Installation](https://github.com/WillCodeForCats/tekmar-packetserv/wiki/Installation)
 
 ## Integration
 
 This Add-On is used by the Tekmar 482 Integration. For more information,
 refer to the the Integration documentation.
 
-https://github.com/WillCodeForCats/tekmar-482
+[WillCodeForCats/tekmar-482](https://github.com/WillCodeForCats/tekmar-482)
 
 ## Credits
 
