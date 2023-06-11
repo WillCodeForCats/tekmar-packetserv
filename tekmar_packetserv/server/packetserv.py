@@ -101,7 +101,6 @@ class ConnectionList:
 
 # ******************************************************************************
 class RunSerial(threading.Thread):
-
     # --------------------------------------------------------------------------
     def __init__(self, port, connect_list):
         """Pass in the serial port and a reference to a list of connections."""
@@ -219,22 +218,41 @@ class RunSerial(threading.Thread):
 # ******************************************************************************
 if __name__ == "__main__":
     try:
+        ser_mode = os.environ.get("SERIAL_MODE").lower()
         ser_name = os.environ.get("SERIAL_DEV")
+        ser_host = os.environ.get("SERIAL_SRV_HOST")
+        ser_port = os.environ.get("SERIAL_SRV_PORT")
         env_ipv4_acl = os.environ.get("IP4_ACL")
         host_addr = "0.0.0.0"
         port_id = 3000
         ip4_acl = ipaddress.IPv4Network(env_ipv4_acl)
 
+    except KeyError as e:
+        print(f"missing environmental variable: {e}")
+
     except ValueError:
         print(f"address/netmask is invalid: {env_ipv4_acl}")
 
     else:
-        message("Starting Tekmar Packet Server...")
+        message(f"Starting Tekmar Packet Server in {ser_mode} mode...")
         message(f"Process ID = {os.getpid()}")
 
-        message(f"Opening serial port: {ser_name}")
         try:
-            serial_port = serial.Serial(ser_name, timeout=TIMEOUT)
+            if ser_mode == "device":
+                message(f"Opening serial port device: {ser_name}")
+                serial_port = serial.Serial(ser_name, timeout=TIMEOUT)
+
+            if ser_mode == "rfc2217":
+                message(f"Opening RFC2217 connection to {ser_host} port {ser_port}")
+                serial_port = serial.serial_for_url(
+                    f"rfc2217://{ser_host}:{ser_port}", timeout=TIMEOUT
+                )
+
+            if ser_mode == "socket":
+                message(f"Opening socket connection to {ser_host} port {ser_port}")
+                serial_port = serial.serial_for_url(
+                    f"socket://{ser_host}:{ser_port}", timeout=TIMEOUT
+                )
 
         except serial.SerialException:
             message("Could not open serial port. Exiting.")
