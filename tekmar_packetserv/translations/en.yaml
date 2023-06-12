@@ -4,13 +4,13 @@ configuration:
     description: Connect to a local device/path or a TCP/IP serial server.
   serial_device:
     name: Serial Device
-    description: Path to your serial port or serial adapter. Required for "Device" mode.
+    description: Path to your serial port or serial adapter. Required for "device" mode.
   serial_server_host:
     name: Serial Server IP
-    description: IPv4 address for the serial port server. Required for "Socket" and "RFC2217" modes.
+    description: IPv4 address for the serial port server. Required for "socket" and "rfc2217" modes.
   serial_server_port:
     name: Serial Server Port
-    description: TCP/IP port number for the serial port server. Required for "Socket" and "RFC2217" modes.
+    description: TCP/IP port number for the serial port server. Required for "socket" and "rfc2217" modes.
   ip_access_permit:
     name: Allow IP Access
     description: An IPv4 network in CIDR format to allow access.

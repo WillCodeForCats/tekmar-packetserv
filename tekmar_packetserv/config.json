@@ -12,7 +12,7 @@
     "ip_access_permit": "0.0.0.0/0"
   },
   "schema": {
-    "serial_mode": "list(Device|Socket|RFC2217)",
+    "serial_mode": "list(device|socket|rfc2217)",
     "serial_device": "device(subsystem=tty)?",
     "serial_server_host": "match(^\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b$)?",
     "serial_server_port": "port?",

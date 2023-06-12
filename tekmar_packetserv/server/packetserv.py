@@ -218,7 +218,7 @@ class RunSerial(threading.Thread):
 # ******************************************************************************
 if __name__ == "__main__":
     try:
-        ser_mode = os.environ.get("SERIAL_MODE").lower()
+        ser_mode = os.environ.get("SERIAL_MODE")
         ser_name = os.environ.get("SERIAL_DEV")
         ser_host = os.environ.get("SERIAL_SRV_HOST")
         ser_port = os.environ.get("SERIAL_SRV_PORT")
