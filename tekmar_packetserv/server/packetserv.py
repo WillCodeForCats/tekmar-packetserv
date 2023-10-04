@@ -101,7 +101,6 @@ class ConnectionList:
 
 # ******************************************************************************
 class RunSerial(threading.Thread):
-
     # --------------------------------------------------------------------------
     def __init__(self, port, connect_list):
         """Pass in the serial port and a reference to a list of connections."""
