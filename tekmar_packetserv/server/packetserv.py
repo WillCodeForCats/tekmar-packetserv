@@ -240,12 +240,24 @@ if __name__ == "__main__":
         try:
             if ser_mode == "device":
                 message(f"Opening serial port device: {ser_name}")
-                serial_port = serial.Serial(ser_name, timeout=TIMEOUT)
+                serial_port = serial.Serial(
+                    ser_name,
+                    baudrate=9600,
+                    bytesize=serial.EIGHTBITS,
+                    parity=serial.PARITY_NONE,
+                    stopbits=serial.STOPBITS_ONE,
+                    timeout=TIMEOUT,
+                )
 
             if ser_mode == "rfc2217":
                 message(f"Opening RFC2217 connection to {ser_host} port {ser_port}")
                 serial_port = serial.serial_for_url(
-                    f"rfc2217://{ser_host}:{ser_port}", timeout=TIMEOUT
+                    f"rfc2217://{ser_host}:{ser_port}",
+                    baudrate=9600,
+                    bytesize=serial.EIGHTBITS,
+                    parity=serial.PARITY_NONE,
+                    stopbits=serial.STOPBITS_ONE,
+                    timeout=TIMEOUT,
                 )
 
             if ser_mode == "socket":
