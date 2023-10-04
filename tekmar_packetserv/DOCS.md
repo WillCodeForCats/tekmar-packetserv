@@ -31,6 +31,25 @@ systems, enter a port number to remotely access this Add-On. This is useful if y
 Gateway 482 is in a different location, such as a boiler room. The Integration will
 communicate with the Add-On across your LAN.
 
+### Serial Port Configuration
+
+Serial Port Mode: device
+- For a locally connected USB to serial adapter
+
+Serial Port Mode: socket
+- For a IP to serial port server using a TCP socket connection.
+
+Serial Port Mode: rfc2217
+- For a IP to serial port server using a TCP connection using the RFC2217 protocol.
+
+For "socket" and "rfc2217" types you will also need to configure the parameters for Serial Server IP and Serial Server Port.
+
+For IP/Serial converters use "9600,8,N,1" for the port settings:
+- Baud Rate 9600
+- Eight Bits
+- No Parity
+- One Stop Bit
+
 ## Known Issues and Limitations
 
 - If serial communications are lost the packet server won't show an error until the next
