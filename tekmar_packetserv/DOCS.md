@@ -44,7 +44,7 @@ Serial Port Mode: rfc2217
 
 For "socket" and "rfc2217" types you will also need to configure the parameters for Serial Server IP and Serial Server Port.
 
-For IP/Serial converters use "9600,8,N,1" for the port settings:
+On IP-to-Serial servers use "9600,8,N,1" for the serial port:
 - Baud Rate 9600
 - Eight Bits
 - No Parity
