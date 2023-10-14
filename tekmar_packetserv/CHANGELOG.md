@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+- Update overlay
+
 ## 1.2.0
 - Add Socket and RFC2217 serial options.
 

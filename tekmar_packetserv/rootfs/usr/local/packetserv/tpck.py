@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """ Allow reading and writing of packets using the tpck protocol.
 
     The tpck protocol provides data delimiting and validation for

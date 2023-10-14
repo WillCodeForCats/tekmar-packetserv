@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """ Field identifying and parsing.
 
     The contents of this module allow the specifcation of formats of arrays

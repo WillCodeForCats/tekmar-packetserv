@@ -1,6 +1,6 @@
 {
   "name": "Tekmar Packet Server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "url": "https://github.com/WillCodeForCats/tekmar-packetserv",
   "slug": "tekmar_packetserv",
   "description": "Connect with the Tekmar Gateway 482",
