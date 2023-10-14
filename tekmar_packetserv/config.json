@@ -1,6 +1,6 @@
 {
   "name": "Tekmar Packet Server",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "url": "https://github.com/WillCodeForCats/tekmar-packetserv",
   "slug": "tekmar_packetserv",
   "description": "Connect with the Tekmar Gateway 482",
@@ -8,11 +8,14 @@
   "image": "ghcr.io/willcodeforcats/{arch}-tekmar-packetserv",
   "init": false,
   "options": {
-    "serial_device": null,
+    "serial_mode": "Device",
     "ip_access_permit": "0.0.0.0/0"
   },
   "schema": {
-    "serial_device": "device(subsystem=tty)",
+    "serial_mode": "list(device|socket|rfc2217)",
+    "serial_device": "device(subsystem=tty)?",
+    "serial_server_host": "match(^\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b$)?",
+    "serial_server_port": "port?",
     "ip_access_permit": "match(^\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\/([0-9]|1[0-9]|2[0-9]|3[0-2])\\b$)"
   },
   "ports": {
