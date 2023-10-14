@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+- Update S6-Overlay structure
+- Fixes reloading on serial port errors
+
 ## 1.2.0
 - Add Socket and RFC2217 serial options.
 

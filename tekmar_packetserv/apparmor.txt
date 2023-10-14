@@ -28,9 +28,9 @@ profile tekmar_packetserv flags=(attach_disconnected,mediate_deleted) {
   /data/** rw,
 
   # Start new profile for service
-  /server/packetserv.py cx -> packetserv.py,
+  /usr/local/packetserv/packetserv.py cx -> packetserv.py,
 
-  profile /server/packetserv.py flags=(attach_disconnected,mediate_deleted) {
+  profile /usr/local/packetserv/packetserv.py flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
 
     # Receive signals from S6-Overlay

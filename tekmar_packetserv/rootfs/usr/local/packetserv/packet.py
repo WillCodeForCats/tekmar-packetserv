@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """ Packet object.
 
     Basically a packet has a type and some data and is represented in two
