@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2
+- Update documentation.
+
 ## 1.2.1
 - Update S6-Overlay structure
 - Fixes reloading on serial port errors
