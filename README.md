@@ -12,7 +12,7 @@ This is a Home Assistant Add-On used by the [Tekmar Gateway 482 Integration](htt
 This Add-On requires additional hardware:
 
 - Tekmar Gateway 482 (tN4 Gateway, RS232)
-- RS232 Serial Port or a USB to Serial adapter.
+- RS232 Serial Port or a USB to Serial adapter
 - RS232 Serial to IP converter for Socket or RFC2217
 
 ## Installation
