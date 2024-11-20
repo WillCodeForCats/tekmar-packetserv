@@ -15,6 +15,8 @@ This Add-On requires additional hardware:
 - RS232 Serial Port or a USB to Serial adapter
 - RS232 Serial to IP converter for Socket or RFC2217
 
+Note: Gateway 486 IS NOT compatible because it is cloud-only.
+
 ## Installation
 
 [WillCodeForCats/tekmar-packetserv/wiki/Installation](https://github.com/WillCodeForCats/tekmar-packetserv/wiki/Installation)
