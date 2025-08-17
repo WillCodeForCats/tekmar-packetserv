@@ -10,8 +10,8 @@ ARG BUILD_ARCH
 RUN \
     # Install system packages
     apk add --no-cache \
-        python3==3.18.* \
-        py3-pip==22.1.* \
+        python3=~3.18 \
+        py3-pip=~22.1 \
         curl && \
     # Download and install tempio with error handling
     curl -sSLf -o /usr/bin/tempio \
