@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.0
+- Drop support for armhf, armv7, and i386 architectures.
+
 ## 1.2.2
 - Update documentation.
 
