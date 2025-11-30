@@ -7,5 +7,3 @@ labels:
   org.opencontainers.image.description: "Communicate with the Tekmar Gateway 482."
   org.opencontainers.image.source: "https://github.com/WillCodeForCats/tekmar-packetserv"
   org.opencontainers.image.licenses: "MIT License"
-args:
-  TEMPIO_VERSION: "2021.09.0"
