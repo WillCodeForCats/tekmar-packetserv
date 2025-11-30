@@ -6,8 +6,9 @@ ENV LANG=C.UTF-8
 
 # Install requirements for add-on
 RUN \
-    apk add --no-cache python3 py3-pip \
-    && pip3 --no-cache-dir install pyserial
+    apk add --no-cache python3 \
+    && apk add --no-cache py3-pip \
+    && pip3 --no-cache-dir install pyserial==3.5
 
 # Copy data
 COPY rootfs /
