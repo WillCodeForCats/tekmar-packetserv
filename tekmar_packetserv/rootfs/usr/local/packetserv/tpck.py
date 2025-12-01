@@ -1,10 +1,9 @@
-""" Allow reading and writing of packets using the tpck protocol.
+"""Allow reading and writing of packets using the tpck protocol.
 
-    The tpck protocol provides data delimiting and validation for
-    communication links that can not support the simplicity of the
-    string-based packet transfer.
-    """
-
+The tpck protocol provides data delimiting and validation for
+communication links that can not support the simplicity of the
+string-based packet transfer.
+"""
 
 # ******************************************************************************
 import packet

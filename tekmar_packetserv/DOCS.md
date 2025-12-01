@@ -14,7 +14,7 @@ This Add-On requires additional hardware:
 
 This Add-On is part of the Tekmar 482 Integration. Install this integration together with the add-on:
 
-https://github.com/WillCodeForCats/tekmar-482
+[https://github.com/WillCodeForCats/tekmar-482](https://github.com/WillCodeForCats/tekmar-482)
 
 ## Configuration
 
@@ -32,17 +32,21 @@ communicate with the Add-On across your LAN.
 ### Serial Port Configuration
 
 Serial Port Mode: device
+
 - For a locally connected USB to serial adapter
 
 Serial Port Mode: socket
+
 - For a IP to serial port server using a TCP socket connection.
 
 Serial Port Mode: rfc2217
+
 - For a IP to serial port server using a TCP connection using the RFC2217 protocol.
 
 For "socket" and "rfc2217" types you will also need to configure the parameters for Serial Server IP and Serial Server Port.
 
 On IP-to-Serial servers use "9600,8,N,1" for the serial port:
+
 - Baud Rate 9600
 - Eight Bits
 - No Parity
@@ -51,13 +55,13 @@ On IP-to-Serial servers use "9600,8,N,1" for the serial port:
 ## Known Issues and Limitations
 
 - If serial communications are lost the packet server won't show an error until the next
-new incoming connection.
+  new incoming connection.
 - Any errors will cause the packet server to stop, and it will need to be
-restarted manually or by enabling the "watchdog" option.
+  restarted manually or by enabling the "watchdog" option.
 
 ## Credits
 
 Implemented using "tN4 Gateway 482 - Custom Integration Tools" and "Tekmar Home Automation
-(tHA) Protocol" from: https://www.watts.com/products/hvac-hot-water-solutions/controls/control-accessories/482/482
+(tHA) Protocol" from: [https://www.watts.com/products/hvac-hot-water-solutions/controls/control-accessories/482/482](https://www.watts.com/products/hvac-hot-water-solutions/controls/control-accessories/482/482)
 
 Tekmar, tekmarNet, tN4, tN2, and related logos and trademarks are copyright 2021 Watts.
