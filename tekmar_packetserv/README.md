@@ -6,6 +6,8 @@ Install this integration together with the App:
 
 https://github.com/WillCodeForCats/tekmar-482
 
+Important: This App can only be used with the Gateway 482. The touchscreen Gateway 486 IS NOT compatible because it doesn't have a local API.
+
 ### Credits
 
 Implemented using "tN4 Gateway 482 - Custom Integration Tools" and "Tekmar Home Automation
