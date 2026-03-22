@@ -8,7 +8,7 @@ RUN \
     curl -sSLf -o /usr/bin/tempio \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
 
-# Install requirements for app
+# Install requirements for add-on
 RUN apk add --no-cache python3
 RUN apk add --no-cache py3-pip
 RUN pip3 --no-cache-dir install pyserial

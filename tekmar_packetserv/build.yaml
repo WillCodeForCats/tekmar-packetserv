@@ -1,10 +1,10 @@
-# https://developers.home-assistant.io/docs/apps/configuration/#app-dockerfile
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
 build_from:
   aarch64: "ghcr.io/home-assistant/aarch64-base:3.18"
   amd64: "ghcr.io/home-assistant/amd64-base:3.18"
 labels:
-  org.opencontainers.image.title: "Home Assistant App: Tekmar Packet Server"
-  org.opencontainers.image.description: "Communicate with the Tekmar Gateway 482"
+  org.opencontainers.image.title: "Home Assistant Add-on: Tekmar packet server"
+  org.opencontainers.image.description: "Communicate with the Tekmar Gateway 482."
   org.opencontainers.image.source: "https://github.com/WillCodeForCats/tekmar-packetserv"
   org.opencontainers.image.licenses: "MIT License"
 args:
