@@ -12,7 +12,7 @@ This App requires additional hardware:
 - RS232 Serial Port or a USB to Serial adapter
 - RS232 Serial to IP converter for Socket or RFC2217
 
-Note: Gateway 486 IS NOT compatible because it is cloud-only.
+Important: This App can only be used with the Gateway 482. The touchscreen Gateway 486 IS NOT compatible because it doesn't have a local API.
 
 ## Installation
 
