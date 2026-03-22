@@ -5,10 +5,7 @@ FROM $BUILD_FROM
 ENV LANG=C.UTF-8
 
 # Install requirements for add-on
-RUN \
-    apk add --no-cache python3 \
-    && apk add --no-cache py3-pip \
-    && apk add --no-cache py3-pyserial
+RUN apk add --no-cache python3 py3-pyserial
 
 # Copy data
 COPY rootfs /
