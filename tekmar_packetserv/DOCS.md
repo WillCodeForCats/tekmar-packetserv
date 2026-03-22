@@ -1,10 +1,10 @@
-# Home Assistant Add-On: Tekmar Packet Server
+# Home Assistant App: Tekmar Packet Server
 
 The Tekmar Gateway 482 provides an RS232 serial interface to temkarNet thermostats, setpoint controls, and snow melting controls together with the [Tekmar Gateway 482 Integration](https://github.com/WillCodeForCats/tekmar-482) for Home Assistant.
 
 ## Hardware
 
-This Add-On requires additional hardware:
+This App requires additional hardware:
 
 - Tekmar Gateway 482 (tN4 Gateway, RS232)
 - RS232 Serial Port or a USB to Serial adapter
@@ -12,7 +12,7 @@ This Add-On requires additional hardware:
 
 ## Integration
 
-This Add-On is part of the Tekmar 482 Integration. Install this integration together with the add-on:
+This App is part of the Tekmar 482 Integration. Install this integration together with the App:
 
 https://github.com/WillCodeForCats/tekmar-482
 
@@ -24,10 +24,10 @@ serial port.
 
 Select the serial device under "Configuration". This is required.
 
-If you need to run the Tekmar Packet Server Add-On and Tekmar 482 Integration on different
-systems, enter a port number to remotely access this Add-On. This is useful if your Tekmar
+If you need to run the Tekmar Packet Server App and Tekmar 482 Integration on different
+systems, enter a port number to remotely access this App. This is useful if your Tekmar
 Gateway 482 is in a different location, such as a boiler room. The Integration will
-communicate with the Add-On across your LAN.
+communicate with the App across your LAN.
 
 ### Serial Port Configuration
 

@@ -1,8 +1,8 @@
 # Tekmar Packet Server
 
-This is a Home Assistant Add-On used by the [Tekmar Gateway 482 Integration](https://github.com/WillCodeForCats/tekmar-482) to communicate with your Tekmar networked thermostats, setpoint controls, and snow melting controls. It is part of the Tekmar 482 Integration.
+This is a Home Assistant App used by the [Tekmar Gateway 482 Integration](https://github.com/WillCodeForCats/tekmar-482) to communicate with your Tekmar networked thermostats, setpoint controls, and snow melting controls. It is part of the Tekmar 482 Integration.
 
-Install this integration together with the add-on:
+Install this integration together with the App:
 
 https://github.com/WillCodeForCats/tekmar-482
 
