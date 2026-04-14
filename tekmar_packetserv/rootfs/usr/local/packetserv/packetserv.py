@@ -315,7 +315,7 @@ if __name__ == "__main__":
                 except ConnectionError as err:
                     message(err)
                     shut_down(
-                        "Exception. Forcing shutdown.", serial_thread, connections
+                        "Connection error. Forcing shutdown.", serial_thread, connections
                     )
 
                 except Exception:
