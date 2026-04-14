@@ -289,20 +289,27 @@ if __name__ == "__main__":
                 try:
                     while True:
                         c, a = sock.accept()
+                        ip_obj = ipaddress.ip_address(a[0])
 
-                        if ipaddress.IPv4Address(a[0]) in ip4_acl:
-                            connections.lock.acquire()
-                            connections.lst.append(Connection(c, a))
-                            connections.lock.release()
-                            if not check_thread_alive(serial_thread):
-                                raise ConnectionError(
-                                    "Serial port thread is not running!"
-                                )
-                            message("Connected to %s:%d" % (a[0], a[1]))
-
+                        if isinstance(ip_obj, ipaddress.IPv6Address) and ip_obj.ipv4_mapped:
+                            ipv4_addr = ip_obj.ipv4_mapped
+                            message(f"Detected IPv4-mapped IPv6: {a[0]} is IPv4 {ipv4_addr}")
                         else:
+                            ipv4_addr = a[0]
+
+                        if ipaddress.ip_address(ipv4_addr) not in ip4_acl:
                             c.close()
-                            message(f"Connection refused: {a[0]} not in {env_ipv4_acl}")
+                            message(f"Connection refused: {ipv4_addr} not in {env_ipv4_acl}")
+                            continue
+
+                        connections.lock.acquire()
+                        connections.lst.append(Connection(c, a))
+                        connections.lock.release()
+                        if not check_thread_alive(serial_thread):
+                            raise ConnectionError(
+                                "Serial port thread is not running!"
+                            )
+                        message("Connected to %s:%d" % (a[0], a[1]))
 
                 except socket.error as err:
                     message(err)
