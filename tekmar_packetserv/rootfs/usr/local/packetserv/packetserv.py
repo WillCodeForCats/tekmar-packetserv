@@ -281,7 +281,7 @@ if __name__ == "__main__":
                 sock_host, sock_port = sock.getsockname()
                 message(f"IPv4 Access List: {ip4_acl}")
                 message(f"Docker container: {sock_host}:{sock_port}")
-                message("Waiting for incoming connections..."")
+                message("Waiting for incoming connections...")
 
             except socket.error:
                 message("Could not open socket at %s:%d" % (host_addr, port_id))
