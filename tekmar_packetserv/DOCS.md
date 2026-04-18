@@ -4,10 +4,16 @@ The Tekmar Gateway 482 provides an RS232 serial interface to temkarNet thermosta
 
 ## Hardware
 
-This App requires additional hardware:
+This App requires additional hardware to communicate with a Tekmar network.
 
 - Tekmar Gateway 482 (tN4 Gateway, RS232)
+
+A serial connection:
+
 - RS232 Serial Port or a USB to Serial adapter
+
+Or an IP to Serial connection:
+
 - RS232 Serial to IP converter for Socket or RFC2217
 
 ## Integration
@@ -32,17 +38,21 @@ communicate with the App across your LAN.
 ### Serial Port Configuration
 
 Serial Port Mode: device
+
 - For a locally connected USB to serial adapter
 
 Serial Port Mode: socket
+
 - For a IP to serial port server using a TCP socket connection.
 
 Serial Port Mode: rfc2217
+
 - For a IP to serial port server using a TCP connection using the RFC2217 protocol.
 
 For "socket" and "rfc2217" types you will also need to configure the parameters for Serial Server IP and Serial Server Port.
 
 On IP-to-Serial servers use "9600,8,N,1" for the serial port:
+
 - Baud Rate 9600
 - Eight Bits
 - No Parity
@@ -51,9 +61,9 @@ On IP-to-Serial servers use "9600,8,N,1" for the serial port:
 ## Known Issues and Limitations
 
 - If serial communications are lost the packet server won't show an error until the next
-new incoming connection.
+  new incoming connection.
 - Any errors will cause the packet server to stop, and it will need to be
-restarted manually or by enabling the "watchdog" option.
+  restarted manually or by enabling the "watchdog" option.
 
 ## Credits
 
