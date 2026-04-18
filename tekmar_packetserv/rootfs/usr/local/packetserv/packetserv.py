@@ -62,6 +62,14 @@ def check_thread_alive(thr):
 
 
 # ******************************************************************************
+def get_container_ip():
+    # determine which interface the OS would route through
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        s.connect(("8.8.8.8", 80))
+        return s.getsockname()[0]
+
+
+# ******************************************************************************
 class Connection:
     """Container for a socket and its address.
 
@@ -222,7 +230,7 @@ if __name__ == "__main__":
         ser_host = os.environ.get("SERIAL_SRV_HOST")
         ser_port = os.environ.get("SERIAL_SRV_PORT")
         env_ipv4_acl = os.environ.get("IP4_ACL")
-        host_addr = "0.0.0.0"
+        host_addr = get_container_ip()
         port_id = 3000
         ip4_acl = ipaddress.IPv4Network(env_ipv4_acl)
 
