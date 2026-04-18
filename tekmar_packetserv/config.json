@@ -1,11 +1,11 @@
 {
   "name": "Tekmar Packet Server",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "url": "https://github.com/WillCodeForCats/tekmar-packetserv",
   "slug": "tekmar_packetserv",
   "description": "Connect with the Tekmar Gateway 482",
   "arch": ["aarch64", "amd64"],
-  "image": "ghcr.io/willcodeforcats/{arch}-tekmar-packetserv",
+  "image": "ghcr.io/willcodeforcats/tekmar-packetserv",
   "init": false,
   "options": {
     "serial_mode": "Device",
