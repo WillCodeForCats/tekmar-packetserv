@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.2
+- Detect IPv4 mapped IPv6
+
 ## 1.3.1
 - Update to base 3.19
 - Remove tempio
