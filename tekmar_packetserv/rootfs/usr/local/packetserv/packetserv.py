@@ -293,6 +293,8 @@ if __name__ == "__main__":
                         c, a = sock.accept()
                         ip_obj = ipaddress.ip_address(a[0])
 
+                        message("Incoming connection from %s:%d" % (a[0], a[1]))
+
                         if (
                             isinstance(ip_obj, ipaddress.IPv6Address)
                             and ip_obj.ipv4_mapped
@@ -316,7 +318,7 @@ if __name__ == "__main__":
                         connections.lock.release()
                         if not check_thread_alive(serial_thread):
                             raise ConnectionError("Serial port thread is not running!")
-                        message("Connected to %s:%d" % (a[0], a[1]))
+                        message("Accepted connection from %s:%d" % (a[0], a[1]))
 
                 except socket.error as err:
                     message(err)
