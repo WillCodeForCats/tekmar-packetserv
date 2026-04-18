@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3.2
+
 - Detect IPv4 mapped IPv6
 - Additional logging
 
