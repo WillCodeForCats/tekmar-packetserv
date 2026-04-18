@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.3
+- Update to base 3.23
+- Addons are now Apps
+- Bind socket to docker container IP
+- Migrate from deprecated home-assistant/builder action
+
 ## 1.3.2
 
 - Detect IPv4 mapped IPv6
