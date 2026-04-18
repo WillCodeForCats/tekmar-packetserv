@@ -4,10 +4,16 @@ The Tekmar Gateway 482 provides an RS232 serial interface to temkarNet thermosta
 
 ## Hardware
 
-This App requires additional hardware:
+This App requires additional hardware to communicate with a Tekmar network.
 
 - Tekmar Gateway 482 (tN4 Gateway, RS232)
+
+A serial connection:
+
 - RS232 Serial Port or a USB to Serial adapter
+
+Or an IP to Serial connection:
+
 - RS232 Serial to IP converter for Socket or RFC2217
 
 ## Integration
