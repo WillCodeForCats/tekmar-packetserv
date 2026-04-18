@@ -304,9 +304,9 @@ if __name__ == "__main__":
                                 f"Detected IPv4-mapped IPv6: {a[0]} is IPv4 {ipv4_addr}"
                             )
                         else:
-                            ipv4_addr = a[0]
+                            ipv4_addr = ip_obj
 
-                        if ipaddress.ip_address(ipv4_addr) not in ip4_acl:
+                        if ipv4_addr not in ip4_acl:
                             c.close()
                             message(
                                 f"Connection refused: {ipv4_addr} not in {env_ipv4_acl}"
