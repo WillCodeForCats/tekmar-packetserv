@@ -278,8 +278,10 @@ if __name__ == "__main__":
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 sock.bind((host_addr, port_id))
                 sock.listen(1)
+                sock_host, sock_port = sock.getsockname()
                 message(f"IPv4 Access List: {ip4_acl}")
-                message("Waiting for incoming connections.")
+                message(f"Docker container: {sock_host}:{sock_port}")
+                message("Waiting for incoming connections...")
 
             except socket.error:
                 message("Could not open socket at %s:%d" % (host_addr, port_id))
@@ -313,7 +315,9 @@ if __name__ == "__main__":
                 except ConnectionError as err:
                     message(err)
                     shut_down(
-                        "Exception. Forcing shutdown.", serial_thread, connections
+                        "Connection error. Forcing shutdown.",
+                        serial_thread,
+                        connections,
                     )
 
                 except Exception:
