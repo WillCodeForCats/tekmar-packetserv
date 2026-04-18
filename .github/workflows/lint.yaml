@@ -1,4 +1,4 @@
-name: Add-on Lint
+name: Lint
 
 on:
   push:
