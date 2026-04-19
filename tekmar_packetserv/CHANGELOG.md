@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3.3
+
 - Update to base 3.23
 - Addons are now Apps
 - Bind socket to docker container IP
