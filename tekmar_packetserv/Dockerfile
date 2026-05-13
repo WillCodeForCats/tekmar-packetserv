@@ -5,7 +5,7 @@ FROM ${BUILD_FROM}
 ENV LANG=C.UTF-8
 
 # Install requirements for app
-RUN apk add --no-cache python3 py3-pyserial
+RUN apk add --no-cache python3 py3-pip && pip3 install --no-cache-dir serialx
 
 # Copy data
 COPY rootfs /
