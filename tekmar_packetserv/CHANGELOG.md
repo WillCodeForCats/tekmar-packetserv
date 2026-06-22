@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.0
+- Migrate from pyserial to serialx
+
 ## 1.3.3
 - Update to base 3.23
 - Addons are now Apps
