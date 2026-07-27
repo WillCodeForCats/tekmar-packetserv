@@ -10,7 +10,7 @@ import threading
 import traceback
 
 import packet
-import serial
+import serialx
 import tpck
 
 # ******************************************************************************
@@ -195,7 +195,7 @@ class RunSerial(threading.Thread):
                         self.connections.lst.remove(s)
                 self.connections.lock.release()
 
-        except serial.SerialException as err:
+        except (serialx.SerialException, OSError) as err:
             self.running = False
             message(err)
 
@@ -211,7 +211,7 @@ class RunSerial(threading.Thread):
         message("Serial port closing.")
         try:
             self.port.close()
-        except (select.error, serial.SerialException):
+        except (select.error, serialx.SerialException, OSError):
             pass
 
     # --------------------------------------------------------------------------
@@ -247,33 +247,33 @@ if __name__ == "__main__":
         try:
             if ser_mode == "device":
                 message(f"Opening serial port device: {ser_name}")
-                serial_port = serial.Serial(
+                serial_port = serialx.serial_for_url(
                     ser_name,
                     baudrate=9600,
-                    bytesize=serial.EIGHTBITS,
-                    parity=serial.PARITY_NONE,
-                    stopbits=serial.STOPBITS_ONE,
-                    timeout=TIMEOUT,
+                    byte_size=8,
+                    parity=serialx.Parity.NONE,
+                    stopbits=serialx.StopBits.ONE,
+                    read_timeout=TIMEOUT,
                 )
 
             if ser_mode == "rfc2217":
                 message(f"Opening RFC2217 connection to {ser_host} port {ser_port}")
-                serial_port = serial.serial_for_url(
+                serial_port = serialx.serial_for_url(
                     f"rfc2217://{ser_host}:{ser_port}",
                     baudrate=9600,
-                    bytesize=serial.EIGHTBITS,
-                    parity=serial.PARITY_NONE,
-                    stopbits=serial.STOPBITS_ONE,
-                    timeout=TIMEOUT,
+                    byte_size=8,
+                    parity=serialx.Parity.NONE,
+                    stopbits=serialx.StopBits.ONE,
+                    read_timeout=TIMEOUT,
                 )
 
             if ser_mode == "socket":
                 message(f"Opening socket connection to {ser_host} port {ser_port}")
-                serial_port = serial.serial_for_url(
-                    f"socket://{ser_host}:{ser_port}", timeout=TIMEOUT
+                serial_port = serialx.serial_for_url(
+                    f"socket://{ser_host}:{ser_port}", read_timeout=TIMEOUT
                 )
 
-        except serial.SerialException:
+        except (serialx.SerialException, OSError):
             message("Could not open serial port. Exiting.")
 
         else:
