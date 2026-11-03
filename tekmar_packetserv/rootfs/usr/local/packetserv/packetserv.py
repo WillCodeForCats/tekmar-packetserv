@@ -146,8 +146,8 @@ class RunSerial(threading.Thread):
                 # Read packets and store them in string form in send_data
                 byte_str = self.port.read(READ_SIZE)
                 fmt = RunSerial.get_fmt(byte_str)
-                bytes = list(struct.unpack(fmt, byte_str))
-                pck_list, tpck_state = tpck.parse(bytes, tpck_state)
+                rx_bytes = list(struct.unpack(fmt, byte_str))
+                pck_list, tpck_state = tpck.parse(rx_bytes, tpck_state)
                 send_data = "".join([str(p) for p in pck_list])
 
                 # Make a list of socket objects from the connection list.

@@ -179,26 +179,26 @@ class FieldList(Field):
         return name_list
 
     # --------------------------------------------------------------------------
-    def unpack(self, bytes):
+    def unpack(self, data):
         """Similar to the unpack method for the Field object except a series
         of Fields and FieldLists can be unpacked.
         """
         vals = []
         for f in self.fields:
-            v, bytes = f.unpack(bytes)
+            v, data = f.unpack(data)
             vals.extend(v)
-        return vals, bytes
+        return vals, data
 
     # --------------------------------------------------------------------------
     def pack(self, values):
         """Similar to the pack method for the Field object except a series
         of Fields and FieldLists can be packed.
         """
-        bytes = []
+        data = []
         for f in self.fields:
             b, values = f.pack(values)
-            bytes.extend(b)
-        return bytes, values
+            data.extend(b)
+        return data, values
 
 
 # ******************************************************************************
@@ -245,17 +245,17 @@ class Bitfield(FieldList):
         self.size = self.helper.size
 
     # --------------------------------------------------------------------------
-    def unpack(self, bytes):
+    def unpack(self, data):
         """Similar to the unpack method for the Field object except a series
         of bit-granular Fields and FieldLists can be unpacked.
         """
-        total, bytes = self.helper.unpack(bytes)
+        total, data = self.helper.unpack(data)
         total = total[0]
         vals = []
         for f in [f.size for f in self.fields]:
             vals.append(total & Bitfield.width_table[f])
             total >>= f
-        return vals, bytes
+        return vals, data
 
     # --------------------------------------------------------------------------
     def pack(self, values):
@@ -282,7 +282,7 @@ class Record:
     """
 
     # --------------------------------------------------------------------------
-    def create(field_list, bytes=None):
+    def create(field_list, data=None):
         """Create a record by specifying a field list.  Optionally provide a
         sequence of bytes to unpack as record data.  If no bytes or if
         insufficent bytes are provided, the data is padded with zeroes to
@@ -294,11 +294,11 @@ class Record:
         as opposed to the normal Record() method.
         """
         r = Record(field_list)
-        if bytes is None:
-            bytes = [0] * (field_list.size)
+        if data is None:
+            data = [0] * (field_list.size)
         else:
-            bytes.extend([0] * (field_list.size - len(bytes)))
-        vals, extra = r.unpack(bytes)
+            data.extend([0] * (field_list.size - len(data)))
+        vals, extra = r.unpack(data)
         return r, extra
 
     create = staticmethod(create)
