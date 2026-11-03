@@ -311,6 +311,7 @@ class Record:
     """
 
     # --------------------------------------------------------------------------
+    @staticmethod
     def create(field_list, data=None):
         """Create a record by specifying a field list.
 
@@ -330,8 +331,6 @@ class Record:
             data.extend([0] * (field_list.size - len(data)))
         vals, extra = r.unpack(data)
         return r, extra
-
-    create = staticmethod(create)
 
     # --------------------------------------------------------------------------
     def __init__(self, field_list):

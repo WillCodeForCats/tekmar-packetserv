@@ -120,6 +120,7 @@ class RunSerial(threading.Thread):
         self.running = False
 
     # --------------------------------------------------------------------------
+    @staticmethod
     def get_fmt(len_obj):
         """Return a struct format string for packing or unpacking bytes.
 
@@ -130,8 +131,6 @@ class RunSerial(threading.Thread):
         len_obj argument.
         """
         return "".join(["B"] * len(len_obj))
-
-    get_fmt = staticmethod(get_fmt)
 
     # --------------------------------------------------------------------------
     def run(self):
