@@ -50,7 +50,7 @@ def close_socket(s):
     message("Closing connection to %s:%d" % (s.addr[0], s.addr[1]))
     try:
         s.sock.shutdown(2)
-    except socket.error:
+    except OSError:
         pass
     s.sock.close()
 
@@ -164,12 +164,12 @@ class RunSerial(threading.Thread):
                         rx_str = r.recv(1024)
 
                         # Read data, pack it, then send it.
-                        for s in [s for s in rx_str.rsplit("\n".encode()) if s]:
+                        for s in [s for s in rx_str.rsplit(b"\n") if s]:
                             pck_bytes = tpck.serialize(packet.Packet.from_str(s))
                             fmt = RunSerial.get_fmt(pck_bytes)
                             self.port.write(struct.pack(fmt, *pck_bytes))
 
-                    except socket.error:
+                    except OSError:
                         # rx_str == '' should indicate that a socket closed.
                         # It seems that this method is required for the cygwin
                         # platform as the closed socket shows up in the readable
@@ -183,7 +183,7 @@ class RunSerial(threading.Thread):
                         try:
                             w.send(send_data.encode())
 
-                        except socket.error:
+                        except OSError:
                             removals.append(w)
 
                 # Remove dead and dying sockets from the connection list.
@@ -211,7 +211,7 @@ class RunSerial(threading.Thread):
         message("Serial port closing.")
         try:
             self.port.close()
-        except (select.error, serial.SerialException):
+        except (OSError, serial.SerialException):
             pass
 
     # --------------------------------------------------------------------------
@@ -291,7 +291,7 @@ if __name__ == "__main__":
                 message(f"Docker container: {sock_host}:{sock_port}")
                 message("Waiting for incoming connections...")
 
-            except socket.error:
+            except OSError:
                 message("Could not open socket at %s:%d" % (host_addr, port_id))
                 serial_thread.stop()
 
@@ -328,7 +328,7 @@ if __name__ == "__main__":
                             raise ConnectionError("Serial port thread is not running!")
                         message("Accepted connection from %s:%d" % (a[0], a[1]))
 
-                except socket.error as err:
+                except OSError as err:
                     message(err)
                     shut_down(
                         "Socket error. Forcing shutdown.", serial_thread, connections
