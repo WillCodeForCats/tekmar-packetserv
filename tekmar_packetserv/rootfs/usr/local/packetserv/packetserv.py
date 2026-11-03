@@ -26,7 +26,7 @@ READ_SIZE = 100
 def message(msg):
     """Emit a time-stamped message."""
     msg_str = "{}: {}"
-    print(msg_str.format(str(datetime.datetime.now()), msg), flush=True)
+    print(msg_str.format(str(datetime.datetime.now()), msg), flush=True)  # noqa: T201
 
 
 # ******************************************************************************
@@ -236,10 +236,10 @@ if __name__ == "__main__":
         ip4_acl = ipaddress.IPv4Network(env_ipv4_acl)
 
     except KeyError as e:
-        print(f"missing environmental variable: {e}")
+        message(f"missing environmental variable: {e}")
 
     except ValueError:
-        print(f"address/netmask is invalid: {env_ipv4_acl}")
+        message(f"address/netmask is invalid: {env_ipv4_acl}")
 
     else:
         message(f"Starting Tekmar Packet Server in {ser_mode} mode...")
