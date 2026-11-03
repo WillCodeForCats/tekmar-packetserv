@@ -329,7 +329,7 @@ class Record:
             data = [0] * (field_list.size)
         else:
             data.extend([0] * (field_list.size - len(data)))
-        vals, extra = r.unpack(data)
+        _vals, extra = r.unpack(data)
         return r, extra
 
     # --------------------------------------------------------------------------
