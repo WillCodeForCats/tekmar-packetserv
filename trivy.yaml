@@ -1,0 +1,11 @@
+---
+# Super-linter defaults (TEMPLATES/trivy.yaml) plus the project ignore file
+exit-code: 1
+exit-on-eol: 2
+ignorefile: .trivyignore
+scan:
+  disable-telemetry: true
+  scanners:
+    - vuln
+    - misconfig
+    - secret
