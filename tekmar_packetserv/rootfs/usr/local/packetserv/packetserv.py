@@ -273,6 +273,8 @@ if __name__ == "__main__":
                     f"socket://{ser_host}:{ser_port}", read_timeout=TIMEOUT
                 )
 
+            serial_port.open()
+
         except (serialx.SerialException, OSError):
             message("Could not open serial port. Exiting.")
 
