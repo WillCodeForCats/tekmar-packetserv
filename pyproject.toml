@@ -185,6 +185,8 @@ split-on-trailing-comma = false
   "SLF001", # Tests assert on internal probe counters and issue ids
   "TID252",
 ]
+# Standalone scripts run directly in the container, not an importable package
+"tekmar_packetserv/rootfs/**" = ["INP001"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 25
