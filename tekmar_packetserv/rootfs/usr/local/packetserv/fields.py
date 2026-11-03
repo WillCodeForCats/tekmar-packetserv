@@ -372,9 +372,9 @@ class Record:
     # --------------------------------------------------------------------------
     def set(self, **values):
         """Set values for the fields specified in the keyword arguments."""
-        for v in values:
-            if v in self.values:
-                self.values[v] = values[v]
+        for key, value in values.items():
+            if key in self.values:
+                self.values[key] = value
 
     # --------------------------------------------------------------------------
     def __setitem__(self, key, value):
