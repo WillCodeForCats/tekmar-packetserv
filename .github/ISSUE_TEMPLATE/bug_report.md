@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
 Before reporting a bug, make sure you are running the latest version of `tekmar-packetserv` add-on and the `tekmar-482` integration.
@@ -22,9 +21,10 @@ If applicable, add screenshots of the problem and/or configuration.
 Copy any log messages/errors from the Home Assistant add-on logs.
 
 **Home Assistant (please complete the following information):**
- - Home Assistant Core Version:
- - Gateway 482 Firmware Version:
- - Gateway 482 Protocol Version:
+
+- Home Assistant Core Version:
+- Gateway 482 Firmware Version:
+- Gateway 482 Protocol Version:
 
 **Additional context**
 Add any other context about the problem here.

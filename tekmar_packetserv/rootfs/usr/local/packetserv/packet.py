@@ -1,14 +1,14 @@
-""" Packet object.
+r"""Packet object.
 
-    Basically a packet has a type and some data and is represented in two
-    forms: its raw (object) form and in string form.
+Basically a packet has a type and some data and is represented in two
+forms: its raw (object) form and in string form.
 
-    In string form, it looks like a sequence of hex bytes, e.g.
-        0102030F\n
+In string form, it looks like a sequence of hex bytes, e.g.
+    0102030F\n
 
-    The 01 is the packet type and 02, 03, and 0F is the packet data.  A
-    packet is always delimited by a newline character (in string form).
-    """
+The 01 is the packet type and 02, 03, and 0F is the packet data.  A
+packet is always delimited by a newline character (in string form).
+"""
 
 # ******************************************************************************
 from fields import FieldList, Int8
@@ -29,36 +29,37 @@ from fields import FieldList, Int8
 
 # ******************************************************************************
 class Packet:
+    """A packet type and its data bytes."""
+
     # --------------------------------------------------------------------------
     format = FieldList("PacketFormat", Int8(None))
 
     # --------------------------------------------------------------------------
-    def __init__(self, type=TYPE_GENERAL, data=[]):
+    def __init__(self, type=TYPE_GENERAL, data=None):
+        """Create a packet with the given type and list of data bytes."""
         self.type = type
-        self.data = data
+        self.data = data if data is not None else []
 
     # --------------------------------------------------------------------------
     def __str__(self):
-        """Create a string-representation of the packet (see the docs for the
-        module.
-        """
-        lst = ["%02X" % b for b in self.joined()]
+        """Create a string-representation of the packet (see the module docs)."""
+        lst = [f"{b:02X}" for b in self.joined()]
         lst.append("\n")
         return "".join(lst)
 
     # --------------------------------------------------------------------------
     def joined(self):
-        """Join the type and data into a single sequence and return the
-        result.
-        """
+        """Join the type and data into a single sequence and return it."""
         lst = [self.type]
         lst.extend(self.data)
         return lst
 
     # --------------------------------------------------------------------------
+    @staticmethod
     def from_str(s):
-        """Convert a packet in string form (see the module docs) into a
-        a packet object and return the result.
+        """Convert a packet in string form (see the module docs) to a Packet.
+
+        Return the resulting packet object.
         """
         ln = len(s)
         if ln & 1:
@@ -66,13 +67,9 @@ class Packet:
         if ln == 0:
             return Packet()
         try:
-            type, data = Packet.format.unpack(
-                list(
-                    [int(x, 16) for x in [s[idx : idx + 2] for idx in range(0, ln, 2)]]
-                )
+            pkt_type, data = Packet.format.unpack(
+                [int(x, 16) for x in [s[idx : idx + 2] for idx in range(0, ln, 2)]]
             )
-            return Packet(type[0], data)
+            return Packet(pkt_type[0], data)
         except ValueError:
             return Packet()
-
-    from_str = staticmethod(from_str)

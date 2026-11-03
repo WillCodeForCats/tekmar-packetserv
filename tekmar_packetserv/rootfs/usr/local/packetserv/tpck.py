@@ -1,10 +1,9 @@
-""" Allow reading and writing of packets using the tpck protocol.
+"""Allow reading and writing of packets using the tpck protocol.
 
-    The tpck protocol provides data delimiting and validation for
-    communication links that can not support the simplicity of the
-    string-based packet transfer.
-    """
-
+The tpck protocol provides data delimiting and validation for
+communication links that can not support the simplicity of the
+string-based packet transfer.
+"""
 
 # ******************************************************************************
 import packet
@@ -21,8 +20,7 @@ _stuff_list = (_SOF_CODE, _EOF_CODE, _ESC_CODE)
 
 # ******************************************************************************
 def serialize(p):
-    """Take a packet object and convert it to a string of bytes that conform
-    to the tpck protocol.
+    """Convert a packet object to a sequence of bytes using the tpck protocol.
 
     Return the resulting sequence which will include start and end of
     frame delimiters along with escape characters and a checksum to
@@ -82,8 +80,9 @@ def _calc_checksum(type, data):
 
 # ******************************************************************************
 class _TpckRxState:
-    """Receiver state object implemented by generator functions (similar to
-    protothreads.
+    """Receiver state object.
+
+    Implemented by generator functions (similar to protothreads).
     """
 
     # --------------------------------------------------------------------------
@@ -113,26 +112,26 @@ class _TpckRxState:
         yield
 
         # Read the length of the data.
-        for temp in self.rx_byte():
+        for _ in self.rx_byte():
             yield
         self.data = [0] * self.byte
         yield
 
         # Read the type of the packet.
-        for temp in self.rx_byte():
+        for _ in self.rx_byte():
             yield
         self.type = self.byte
         yield
 
         # Read each data byte.
         for i in range(len(self.data)):
-            for temp in self.rx_byte():
+            for _ in self.rx_byte():
                 yield
             self.data[i] = self.byte
             yield "Data" + str(i) + "=" + str(self.byte)
 
         # Read the checksum.
-        for temp in self.rx_byte():
+        for _ in self.rx_byte():
             yield
         self.cs = self.byte
         yield
@@ -143,10 +142,11 @@ class _TpckRxState:
 
     # --------------------------------------------------------------------------
     def feed(self, b):
-        """Accept bytes from a stream and feed them through the generator
-        functions.  This acts as a 'supervisor' to the generator 'mini-
-        threads' to handle the case where an un-escaped start-of-frame
-        character is recieved while receiving another packet.
+        """Accept bytes from a stream and feed them through the generators.
+
+        This acts as a 'supervisor' to the generator 'mini-threads' to
+        handle the case where an un-escaped start-of-frame character is
+        recieved while receiving another packet.
         """
         self.byte = b
         if b == _SOF_CODE and not self.underway:

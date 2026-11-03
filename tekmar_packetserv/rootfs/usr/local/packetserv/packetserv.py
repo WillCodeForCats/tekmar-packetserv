@@ -1,5 +1,6 @@
 """Packet server application."""
 
+import contextlib
 import datetime
 import ipaddress
 import os
@@ -25,14 +26,12 @@ READ_SIZE = 100
 def message(msg):
     """Emit a time-stamped message."""
     msg_str = "{}: {}"
-    print(msg_str.format(str(datetime.datetime.now()), msg), flush=True)
+    print(msg_str.format(str(datetime.datetime.now()), msg), flush=True)  # noqa: T201
 
 
 # ******************************************************************************
 def shut_down(msg, ser_thrd, connections):
-    """Shut down the server, closing all socket connections and the serial
-    port.
-    """
+    """Shut down the server, closing all socket connections and the serial port."""
     message(msg)
     connections.lock.acquire()
     for c in connections.lst:
@@ -44,25 +43,33 @@ def shut_down(msg, ser_thrd, connections):
 
 # ******************************************************************************
 def close_socket(s):
-    """Shut down a connection to a socket.  This accepts a Connection
-    instance, not a socket.
+    """Shut down a connection to a socket.
+
+    This accepts a Connection instance, not a socket.
     """
-    message("Closing connection to %s:%d" % (s.addr[0], s.addr[1]))
-    try:
+    message(f"Closing connection to {s.addr[0]}:{s.addr[1]}")
+    with contextlib.suppress(OSError):
         s.sock.shutdown(2)
-    except socket.error:
-        pass
     s.sock.close()
 
 
 # ******************************************************************************
 def check_thread_alive(thr):
+    """Return True if the thread is still running."""
     thr.join(timeout=0.0)
     return thr.is_alive()
 
 
 # ******************************************************************************
+def require_thread_alive(thr):
+    """Raise ConnectionError if the serial thread has stopped."""
+    if not check_thread_alive(thr):
+        raise ConnectionError("Serial port thread is not running!")
+
+
+# ******************************************************************************
 def get_container_ip():
+    """Return the IP address of the interface used for outbound traffic."""
     # determine which interface the OS would route through
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))
@@ -90,13 +97,13 @@ class ConnectionList:
 
     # --------------------------------------------------------------------------
     def __init__(self):
+        """Create an empty connection list and its lock."""
         self.lock = threading.RLock()
         self.lst = []
 
     # --------------------------------------------------------------------------
     def find_socket(self, sock):
-        """Find a socket in the list and return the containing Connection
-        object.
+        """Find a socket in the list and return the containing Connection object.
 
         Return None if it isn't found.
         """
@@ -108,6 +115,8 @@ class ConnectionList:
 
 # ******************************************************************************
 class RunSerial(threading.Thread):
+    """Thread that bridges the serial port and the connected sockets."""
+
     # --------------------------------------------------------------------------
     def __init__(self, port, connect_list):
         """Pass in the serial port and a reference to a list of connections."""
@@ -117,16 +126,17 @@ class RunSerial(threading.Thread):
         self.running = False
 
     # --------------------------------------------------------------------------
+    @staticmethod
     def get_fmt(len_obj):
-        """Return a format string (as required by struct methods) that can
-        be used to pack a list of or unpack a string of bytes.
+        """Return a struct format string for packing or unpacking bytes.
+
+        The format string can be used to pack a list of or unpack a string
+        of bytes.
 
         The length of the returned format string will be the length of the
         len_obj argument.
         """
         return "".join(["B"] * len(len_obj))
-
-    get_fmt = staticmethod(get_fmt)
 
     # --------------------------------------------------------------------------
     def run(self):
@@ -146,8 +156,8 @@ class RunSerial(threading.Thread):
                 # Read packets and store them in string form in send_data
                 byte_str = self.port.read(READ_SIZE)
                 fmt = RunSerial.get_fmt(byte_str)
-                bytes = list(struct.unpack(fmt, byte_str))
-                pck_list, tpck_state = tpck.parse(bytes, tpck_state)
+                rx_bytes = list(struct.unpack(fmt, byte_str))
+                pck_list, tpck_state = tpck.parse(rx_bytes, tpck_state)
                 send_data = "".join([str(p) for p in pck_list])
 
                 # Make a list of socket objects from the connection list.
@@ -164,12 +174,12 @@ class RunSerial(threading.Thread):
                         rx_str = r.recv(1024)
 
                         # Read data, pack it, then send it.
-                        for s in [s for s in rx_str.rsplit("\n".encode()) if s]:
+                        for s in [s for s in rx_str.rsplit(b"\n") if s]:
                             pck_bytes = tpck.serialize(packet.Packet.from_str(s))
                             fmt = RunSerial.get_fmt(pck_bytes)
                             self.port.write(struct.pack(fmt, *pck_bytes))
 
-                    except socket.error:
+                    except OSError:  # noqa: PERF203
                         # rx_str == '' should indicate that a socket closed.
                         # It seems that this method is required for the cygwin
                         # platform as the closed socket shows up in the readable
@@ -183,7 +193,7 @@ class RunSerial(threading.Thread):
                         try:
                             w.send(send_data.encode())
 
-                        except socket.error:
+                        except OSError:
                             removals.append(w)
 
                 # Remove dead and dying sockets from the connection list.
@@ -199,20 +209,18 @@ class RunSerial(threading.Thread):
             self.running = False
             message(err)
 
-        except Exception:
+        except Exception:  # noqa: BLE001
             # Expected exception handling is buried in the calls within this
             # thread.  Anything else is to major to handle and is most likely
             # caused by the main server thread being killed.
             self.running = False
             message(traceback.format_exc())
 
-        # Shut down the thread.  Wrap the port-close in a try block in case
-        # we are here because the port got closed.
+        # Shut down the thread.  Suppress port-close errors in case we are
+        # here because the port got closed.
         message("Serial port closing.")
-        try:
+        with contextlib.suppress(OSError, serial.SerialException):
             self.port.close()
-        except (select.error, serial.SerialException):
-            pass
 
     # --------------------------------------------------------------------------
     def stop(self):
@@ -235,10 +243,10 @@ if __name__ == "__main__":
         ip4_acl = ipaddress.IPv4Network(env_ipv4_acl)
 
     except KeyError as e:
-        print(f"missing environmental variable: {e}")
+        message(f"missing environmental variable: {e}")
 
     except ValueError:
-        print(f"address/netmask is invalid: {env_ipv4_acl}")
+        message(f"address/netmask is invalid: {env_ipv4_acl}")
 
     else:
         message(f"Starting Tekmar Packet Server in {ser_mode} mode...")
@@ -291,8 +299,8 @@ if __name__ == "__main__":
                 message(f"Docker container: {sock_host}:{sock_port}")
                 message("Waiting for incoming connections...")
 
-            except socket.error:
-                message("Could not open socket at %s:%d" % (host_addr, port_id))
+            except OSError:
+                message(f"Could not open socket at {host_addr}:{port_id}")
                 serial_thread.stop()
 
             else:
@@ -301,7 +309,7 @@ if __name__ == "__main__":
                         c, a = sock.accept()
                         ip_obj = ipaddress.ip_address(a[0])
 
-                        message("Incoming connection from %s:%d" % (a[0], a[1]))
+                        message(f"Incoming connection from {a[0]}:{a[1]}")
 
                         if (
                             isinstance(ip_obj, ipaddress.IPv6Address)
@@ -324,11 +332,10 @@ if __name__ == "__main__":
                         connections.lock.acquire()
                         connections.lst.append(Connection(c, a))
                         connections.lock.release()
-                        if not check_thread_alive(serial_thread):
-                            raise ConnectionError("Serial port thread is not running!")
-                        message("Accepted connection from %s:%d" % (a[0], a[1]))
+                        require_thread_alive(serial_thread)
+                        message(f"Accepted connection from {a[0]}:{a[1]}")
 
-                except socket.error as err:
+                except OSError as err:
                     message(err)
                     shut_down(
                         "Socket error. Forcing shutdown.", serial_thread, connections
@@ -342,5 +349,5 @@ if __name__ == "__main__":
                         connections,
                     )
 
-                except Exception:
+                except Exception:  # noqa: BLE001
                     message(traceback.format_exc())

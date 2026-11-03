@@ -1,0 +1,5 @@
+# Dockerfile: runs as root to access the host serial device passed in by the Supervisor
+DS-0002
+
+# Dockerfile: container lifecycle is managed by the Home Assistant Supervisor
+DS-0026
