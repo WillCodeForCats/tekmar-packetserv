@@ -51,7 +51,6 @@ class Bitmask(Field):
     """
 
 
-
 # ******************************************************************************
 class Int8(Field):
     """Unsigned 8-bit integer field."""
