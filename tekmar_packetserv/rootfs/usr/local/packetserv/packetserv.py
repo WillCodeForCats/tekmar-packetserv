@@ -199,7 +199,7 @@ class RunSerial(threading.Thread):
             self.running = False
             message(err)
 
-        except Exception:
+        except Exception:  # noqa: BLE001
             # Expected exception handling is buried in the calls within this
             # thread.  Anything else is to major to handle and is most likely
             # caused by the main server thread being killed.
@@ -342,5 +342,5 @@ if __name__ == "__main__":
                         connections,
                     )
 
-                except Exception:
+                except Exception:  # noqa: BLE001
                     message(traceback.format_exc())
