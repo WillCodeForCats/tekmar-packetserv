@@ -315,7 +315,7 @@ class Record:
         Return the list of values and the extra data as a tuple.
         """
         vals, extra = self.fields.unpack(bytes)
-        self.values = dict(list(zip(self.fields.names(), vals)))
+        self.values = dict(list(zip(self.fields.names(), vals, strict=False)))
         return vals, extra
 
     # --------------------------------------------------------------------------
