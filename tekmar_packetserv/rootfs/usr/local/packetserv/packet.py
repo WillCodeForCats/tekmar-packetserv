@@ -33,9 +33,9 @@ class Packet:
     format = FieldList("PacketFormat", Int8(None))
 
     # --------------------------------------------------------------------------
-    def __init__(self, type=TYPE_GENERAL, data=[]):
+    def __init__(self, type=TYPE_GENERAL, data=None):
         self.type = type
-        self.data = data
+        self.data = data if data is not None else []
 
     # --------------------------------------------------------------------------
     def __str__(self):
