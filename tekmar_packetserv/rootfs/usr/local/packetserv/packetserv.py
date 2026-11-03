@@ -173,7 +173,7 @@ class RunSerial(threading.Thread):
                             fmt = RunSerial.get_fmt(pck_bytes)
                             self.port.write(struct.pack(fmt, *pck_bytes))
 
-                    except OSError:
+                    except OSError:  # noqa: PERF203
                         # rx_str == '' should indicate that a socket closed.
                         # It seems that this method is required for the cygwin
                         # platform as the closed socket shows up in the readable
