@@ -1,5 +1,6 @@
 """Packet server application."""
 
+import contextlib
 import datetime
 import ipaddress
 import os
@@ -47,10 +48,8 @@ def close_socket(s):
     This accepts a Connection instance, not a socket.
     """
     message("Closing connection to %s:%d" % (s.addr[0], s.addr[1]))
-    try:
+    with contextlib.suppress(OSError):
         s.sock.shutdown(2)
-    except OSError:
-        pass
     s.sock.close()
 
 
@@ -210,13 +209,11 @@ class RunSerial(threading.Thread):
             self.running = False
             message(traceback.format_exc())
 
-        # Shut down the thread.  Wrap the port-close in a try block in case
-        # we are here because the port got closed.
+        # Shut down the thread.  Suppress port-close errors in case we are
+        # here because the port got closed.
         message("Serial port closing.")
-        try:
+        with contextlib.suppress(OSError, serial.SerialException):
             self.port.close()
-        except (OSError, serial.SerialException):
-            pass
 
     # --------------------------------------------------------------------------
     def stop(self):

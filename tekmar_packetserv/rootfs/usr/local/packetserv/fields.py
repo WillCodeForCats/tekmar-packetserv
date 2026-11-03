@@ -17,6 +17,8 @@ bytes.  The method returns the packed list and any extra values as a
 tuple.
 """
 
+import contextlib
+
 # ******************************************************************************
 LITTLE_ENDIAN = False
 BIG_ENDIAN = True
@@ -379,10 +381,8 @@ class Record:
     # --------------------------------------------------------------------------
     def __setitem__(self, key, value):
         """Allow dictionary-type write access to the record data."""
-        try:
+        with contextlib.suppress(KeyError):
             self.values[key] = value
-        except KeyError:
-            pass
 
     # --------------------------------------------------------------------------
     def __getitem__(self, key):
