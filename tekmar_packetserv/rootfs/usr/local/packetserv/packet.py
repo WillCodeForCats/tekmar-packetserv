@@ -43,7 +43,7 @@ class Packet:
     # --------------------------------------------------------------------------
     def __str__(self):
         """Create a string-representation of the packet (see the module docs)."""
-        lst = ["%02X" % b for b in self.joined()]
+        lst = [f"{b:02X}" for b in self.joined()]
         lst.append("\n")
         return "".join(lst)
 

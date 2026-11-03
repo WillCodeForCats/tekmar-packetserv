@@ -47,7 +47,7 @@ def close_socket(s):
 
     This accepts a Connection instance, not a socket.
     """
-    message("Closing connection to %s:%d" % (s.addr[0], s.addr[1]))
+    message(f"Closing connection to {s.addr[0]}:{s.addr[1]}")
     with contextlib.suppress(OSError):
         s.sock.shutdown(2)
     s.sock.close()
@@ -300,7 +300,7 @@ if __name__ == "__main__":
                 message("Waiting for incoming connections...")
 
             except OSError:
-                message("Could not open socket at %s:%d" % (host_addr, port_id))
+                message(f"Could not open socket at {host_addr}:{port_id}")
                 serial_thread.stop()
 
             else:
@@ -309,7 +309,7 @@ if __name__ == "__main__":
                         c, a = sock.accept()
                         ip_obj = ipaddress.ip_address(a[0])
 
-                        message("Incoming connection from %s:%d" % (a[0], a[1]))
+                        message(f"Incoming connection from {a[0]}:{a[1]}")
 
                         if (
                             isinstance(ip_obj, ipaddress.IPv6Address)
@@ -333,7 +333,7 @@ if __name__ == "__main__":
                         connections.lst.append(Connection(c, a))
                         connections.lock.release()
                         require_thread_alive(serial_thread)
-                        message("Accepted connection from %s:%d" % (a[0], a[1]))
+                        message(f"Accepted connection from {a[0]}:{a[1]}")
 
                 except OSError as err:
                     message(err)
