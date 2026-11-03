@@ -112,26 +112,26 @@ class _TpckRxState:
         yield
 
         # Read the length of the data.
-        for temp in self.rx_byte():
+        for _ in self.rx_byte():
             yield
         self.data = [0] * self.byte
         yield
 
         # Read the type of the packet.
-        for temp in self.rx_byte():
+        for _ in self.rx_byte():
             yield
         self.type = self.byte
         yield
 
         # Read each data byte.
         for i in range(len(self.data)):
-            for temp in self.rx_byte():
+            for _ in self.rx_byte():
                 yield
             self.data[i] = self.byte
             yield "Data" + str(i) + "=" + str(self.byte)
 
         # Read the checksum.
-        for temp in self.rx_byte():
+        for _ in self.rx_byte():
             yield
         self.cs = self.byte
         yield
