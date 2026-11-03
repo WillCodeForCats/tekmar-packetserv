@@ -20,8 +20,7 @@ _stuff_list = (_SOF_CODE, _EOF_CODE, _ESC_CODE)
 
 # ******************************************************************************
 def serialize(p):
-    """Take a packet object and convert it to a string of bytes that conform
-    to the tpck protocol.
+    """Convert a packet object to a sequence of bytes using the tpck protocol.
 
     Return the resulting sequence which will include start and end of
     frame delimiters along with escape characters and a checksum to
@@ -81,8 +80,9 @@ def _calc_checksum(type, data):
 
 # ******************************************************************************
 class _TpckRxState:
-    """Receiver state object implemented by generator functions (similar to
-    protothreads.
+    """Receiver state object.
+
+    Implemented by generator functions (similar to protothreads).
     """
 
     # --------------------------------------------------------------------------
@@ -142,10 +142,11 @@ class _TpckRxState:
 
     # --------------------------------------------------------------------------
     def feed(self, b):
-        """Accept bytes from a stream and feed them through the generator
-        functions.  This acts as a 'supervisor' to the generator 'mini-
-        threads' to handle the case where an un-escaped start-of-frame
-        character is recieved while receiving another packet.
+        """Accept bytes from a stream and feed them through the generators.
+
+        This acts as a 'supervisor' to the generator 'mini-threads' to
+        handle the case where an un-escaped start-of-frame character is
+        recieved while receiving another packet.
         """
         self.byte = b
         if b == _SOF_CODE and not self.underway:

@@ -30,9 +30,7 @@ def message(msg):
 
 # ******************************************************************************
 def shut_down(msg, ser_thrd, connections):
-    """Shut down the server, closing all socket connections and the serial
-    port.
-    """
+    """Shut down the server, closing all socket connections and the serial port."""
     message(msg)
     connections.lock.acquire()
     for c in connections.lst:
@@ -44,8 +42,9 @@ def shut_down(msg, ser_thrd, connections):
 
 # ******************************************************************************
 def close_socket(s):
-    """Shut down a connection to a socket.  This accepts a Connection
-    instance, not a socket.
+    """Shut down a connection to a socket.
+
+    This accepts a Connection instance, not a socket.
     """
     message("Closing connection to %s:%d" % (s.addr[0], s.addr[1]))
     try:
@@ -57,12 +56,14 @@ def close_socket(s):
 
 # ******************************************************************************
 def check_thread_alive(thr):
+    """Return True if the thread is still running."""
     thr.join(timeout=0.0)
     return thr.is_alive()
 
 
 # ******************************************************************************
 def get_container_ip():
+    """Return the IP address of the interface used for outbound traffic."""
     # determine which interface the OS would route through
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))
@@ -90,13 +91,13 @@ class ConnectionList:
 
     # --------------------------------------------------------------------------
     def __init__(self):
+        """Create an empty connection list and its lock."""
         self.lock = threading.RLock()
         self.lst = []
 
     # --------------------------------------------------------------------------
     def find_socket(self, sock):
-        """Find a socket in the list and return the containing Connection
-        object.
+        """Find a socket in the list and return the containing Connection object.
 
         Return None if it isn't found.
         """
@@ -108,6 +109,8 @@ class ConnectionList:
 
 # ******************************************************************************
 class RunSerial(threading.Thread):
+    """Thread that bridges the serial port and the connected sockets."""
+
     # --------------------------------------------------------------------------
     def __init__(self, port, connect_list):
         """Pass in the serial port and a reference to a list of connections."""
@@ -118,8 +121,10 @@ class RunSerial(threading.Thread):
 
     # --------------------------------------------------------------------------
     def get_fmt(len_obj):
-        """Return a format string (as required by struct methods) that can
-        be used to pack a list of or unpack a string of bytes.
+        """Return a struct format string for packing or unpacking bytes.
+
+        The format string can be used to pack a list of or unpack a string
+        of bytes.
 
         The length of the returned format string will be the length of the
         len_obj argument.

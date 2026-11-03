@@ -1,4 +1,4 @@
-"""Packet object.
+r"""Packet object.
 
 Basically a packet has a type and some data and is represented in two
 forms: its raw (object) form and in string form.
@@ -29,36 +29,36 @@ from fields import FieldList, Int8
 
 # ******************************************************************************
 class Packet:
+    """A packet type and its data bytes."""
+
     # --------------------------------------------------------------------------
     format = FieldList("PacketFormat", Int8(None))
 
     # --------------------------------------------------------------------------
     def __init__(self, type=TYPE_GENERAL, data=None):
+        """Create a packet with the given type and list of data bytes."""
         self.type = type
         self.data = data if data is not None else []
 
     # --------------------------------------------------------------------------
     def __str__(self):
-        """Create a string-representation of the packet (see the docs for the
-        module.
-        """
+        """Create a string-representation of the packet (see the module docs)."""
         lst = ["%02X" % b for b in self.joined()]
         lst.append("\n")
         return "".join(lst)
 
     # --------------------------------------------------------------------------
     def joined(self):
-        """Join the type and data into a single sequence and return the
-        result.
-        """
+        """Join the type and data into a single sequence and return it."""
         lst = [self.type]
         lst.extend(self.data)
         return lst
 
     # --------------------------------------------------------------------------
     def from_str(s):
-        """Convert a packet in string form (see the module docs) into a
-        a packet object and return the result.
+        """Convert a packet in string form (see the module docs) to a Packet.
+
+        Return the resulting packet object.
         """
         ln = len(s)
         if ln & 1:
