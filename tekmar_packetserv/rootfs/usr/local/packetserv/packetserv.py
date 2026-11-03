@@ -61,6 +61,13 @@ def check_thread_alive(thr):
 
 
 # ******************************************************************************
+def require_thread_alive(thr):
+    """Raise ConnectionError if the serial thread has stopped."""
+    if not check_thread_alive(thr):
+        raise ConnectionError("Serial port thread is not running!")
+
+
+# ******************************************************************************
 def get_container_ip():
     """Return the IP address of the interface used for outbound traffic."""
     # determine which interface the OS would route through
@@ -325,8 +332,7 @@ if __name__ == "__main__":
                         connections.lock.acquire()
                         connections.lst.append(Connection(c, a))
                         connections.lock.release()
-                        if not check_thread_alive(serial_thread):
-                            raise ConnectionError("Serial port thread is not running!")
+                        require_thread_alive(serial_thread)
                         message("Accepted connection from %s:%d" % (a[0], a[1]))
 
                 except OSError as err:
